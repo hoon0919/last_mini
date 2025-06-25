@@ -1,0 +1,100 @@
+server:
+  port: 8088
+
+---
+
+spring:
+  profiles: default
+  cloud:
+    gateway:
+#<<< API Gateway / Routes
+      routes:
+        - id: SubscriberMembership
+          uri: http://localhost:8082
+          predicates:
+            - Path=/subscribers/**, /pointTransactions/**, /subscriberDetails/**, /pointTransactionHistories/**, /pointExhaustedAlerts/**
+        - id: ContentManagement
+          uri: http://localhost:8083
+          predicates:
+            - Path=/manuscripts/**, /publicationHistories/**, /publishingStatuses/**, /manuscriptLists/**, /manuscriptDetails/**, /publicationHistoryLists/**, /publicationHistoryDetails/**
+        - id: PaymentSubscription
+          uri: http://localhost:8084
+          predicates:
+            - Path=/subscriptions/**, /payments/**, /subscriptionDetails/**, /subscriptionLists/**, /paymentHistories/**, /paymentDetails/**
+        - id: AIPublishing
+          uri: http://localhost:8085
+          predicates:
+            - Path=/publishingJobs/**, /bookProducts/**, /publishingJobStatusLists/**, /publishingJobDetails/**, /bookProductLists/**, /bookProductDetails/**
+        - id: AuthorManagement
+          uri: http://localhost:8086
+          predicates:
+            - Path=/authors/**, /authorApprovals/**, /authorRegistrationDetails/**, /authorRegistrationLists/**, /authorApprovalDetails/**, /authorApprovalLists/**
+        - id: BookManagement
+          uri: http://localhost:8087
+          predicates:
+            - Path=/books/**, /bookReports/**, /bookAdminDetails/**, /bookAdminLists/**, /bookReportDetails/**, /bookReportLists/**
+        - id: frontend
+          uri: http://localhost:8080
+          predicates:
+            - Path=/**
+#>>> API Gateway / Routes
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
+
+---
+
+spring:
+  profiles: docker
+  cloud:
+    gateway:
+      routes:
+        - id: SubscriberMembership
+          uri: http://subscriberMembership:8080
+          predicates:
+            - Path=/subscribers/**, /pointTransactions/**, 
+        - id: ContentManagement
+          uri: http://contentManagement:8080
+          predicates:
+            - Path=/manuscripts/**, /publicationHistories/**, 
+        - id: PaymentSubscription
+          uri: http://paymentSubscription:8080
+          predicates:
+            - Path=/subscriptions/**, /payments/**, 
+        - id: AIPublishing
+          uri: http://aiPublishing:8080
+          predicates:
+            - Path=/publishingJobs/**, /bookProducts/**, 
+        - id: AuthorManagement
+          uri: http://authorManagement:8080
+          predicates:
+            - Path=/authors/**, /authorApprovals/**, 
+        - id: BookManagement
+          uri: http://bookManagement:8080
+          predicates:
+            - Path=/books/**, /bookReports/**, 
+        - id: frontend
+          uri: http://frontend:8080
+          predicates:
+            - Path=/**
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
+server:
+  port: 8080

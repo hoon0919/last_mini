@@ -1,0 +1,342 @@
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: SubscriberMembership
+  labels:
+    app: SubscriberMembership
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: SubscriberMembership
+  template:
+    metadata:
+      labels:
+        app: SubscriberMembership
+    spec:
+      containers:
+        - name: SubscriberMembership
+          image: username/SubscriberMembership:latest
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ContentManagement
+  labels:
+    app: ContentManagement
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ContentManagement
+  template:
+    metadata:
+      labels:
+        app: ContentManagement
+    spec:
+      containers:
+        - name: ContentManagement
+          image: username/ContentManagement:latest
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: PaymentSubscription
+  labels:
+    app: PaymentSubscription
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: PaymentSubscription
+  template:
+    metadata:
+      labels:
+        app: PaymentSubscription
+    spec:
+      containers:
+        - name: PaymentSubscription
+          image: username/PaymentSubscription:latest
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: AIPublishing
+  labels:
+    app: AIPublishing
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: AIPublishing
+  template:
+    metadata:
+      labels:
+        app: AIPublishing
+    spec:
+      containers:
+        - name: AIPublishing
+          image: username/AIPublishing:latest
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: AuthorManagement
+  labels:
+    app: AuthorManagement
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: AuthorManagement
+  template:
+    metadata:
+      labels:
+        app: AuthorManagement
+    spec:
+      containers:
+        - name: AuthorManagement
+          image: username/AuthorManagement:latest
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: BookManagement
+  labels:
+    app: BookManagement
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: BookManagement
+  template:
+    metadata:
+      labels:
+        app: BookManagement
+    spec:
+      containers:
+        - name: BookManagement
+          image: username/BookManagement:latest
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5
+
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: SubscriberMembership
+  labels:
+    app: SubscriberMembership
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: SubscriberMembership
+
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ContentManagement
+  labels:
+    app: ContentManagement
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: ContentManagement
+
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: PaymentSubscription
+  labels:
+    app: PaymentSubscription
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: PaymentSubscription
+
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: AIPublishing
+  labels:
+    app: AIPublishing
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: AIPublishing
+
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: AuthorManagement
+  labels:
+    app: AuthorManagement
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: AuthorManagement
+
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: BookManagement
+  labels:
+    app: BookManagement
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: BookManagement
+
